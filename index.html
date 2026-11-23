@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ท่องระบบสุริยะ – แบบทดสอบวิทยาศาสตร์ ป.4</title>
+<meta name="description" content="แบบทดสอบวิทยาศาสตร์ ชั้นประถมศึกษาปีที่ 4 เรื่อง ระบบสุริยะ 12 ข้อ พร้อมเฉลยและคำอธิบาย">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#101436;
+  --panel:#1b2150;
+  --panel-2:#252c66;
+  --line:#3a4290;
+  --text:#f3f4ff;
+  --muted:#b6baf0;
+  --sun:#ffc633;
+  --ok:#4fe0a8;
+  --ok-bg:#12423f;
+  --bad:#ff7a7a;
+  --bad-bg:#4a2140;
+  --focus:#ffffff;
+  --font-head:"Kanit","Noto Sans Thai",Tahoma,sans-serif;
+  --font-body:"Sarabun","Noto Sans Thai",Tahoma,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(1px 1px at 12% 18%,#fff8 50%,transparent 51%),
+    radial-gradient(1px 1px at 78% 12%,#fff6 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 40% 70%,#fff7 50%,transparent 51%),
+    radial-gradient(1px 1px at 90% 62%,#fff6 50%,transparent 51%),
+    radial-gradient(1px 1px at 22% 88%,#fff5 50%,transparent 51%),
+    var(--night);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:1.125rem;
+  line-height:1.7;
+}
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px}
+h1,h2,h3{font-family:var(--font-head);font-weight:600;line-height:1.35;margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+[hidden]{display:none!important}
+
+/* Start screen */
+.hero{text-align:center;padding-top:8px}
+.orbit-box{width:min(340px,86vw);margin:0 auto 4px}
+.orbit-box svg{width:100%;height:auto;display:block}
+.ring{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:2 5}
+.spin{transform-origin:200px 200px;animation:spin linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero h1{font-size:clamp(2rem,7vw,2.8rem);color:var(--sun)}
+.hero .sub{margin:6px 0 0;color:var(--muted)}
+.info{
+  margin:22px auto 26px;max-width:460px;text-align:left;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px;
+}
+.info p{margin:0}
+.info p + p{margin-top:4px}
+.btn{
+  display:inline-block;border:0;cursor:pointer;
+  font-family:var(--font-head);font-weight:600;font-size:1.2rem;
+  padding:12px 30px;border-radius:999px;
+  background:var(--sun);color:#2a2200;
+}
+.btn:hover{background:#ffd75e}
+.btn.ghost{background:transparent;color:var(--text);border:2px solid var(--line)}
+.btn.ghost:hover{background:var(--panel)}
+
+/* Quiz */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;color:var(--muted);font-size:1rem}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);background:transparent;display:grid;place-items:center;font-size:.7rem;line-height:1;font-weight:700}
+.dot.now{border-color:var(--sun);box-shadow:0 0 0 3px #ffc63333}
+.dot.ok{background:var(--ok);border-color:var(--ok);color:#06241b}
+.dot.bad{background:var(--bad);border-color:var(--bad);color:#3b0b0b}
+.qcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 20px}
+.qnum{margin:0 0 4px;color:var(--sun);font-family:var(--font-head);font-size:1rem}
+.qtext{font-size:clamp(1.3rem,4.6vw,1.65rem);margin-bottom:18px}
+.opts{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.opt{
+  width:100%;text-align:left;cursor:pointer;
+  display:flex;align-items:center;gap:14px;
+  background:var(--panel-2);border:2px solid var(--line);border-radius:14px;
+  padding:12px 16px;min-height:56px;
+}
+.opt:hover:not(:disabled){border-color:var(--sun)}
+.opt .k{
+  flex:none;width:36px;height:36px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--night);border:2px solid var(--line);
+  font-family:var(--font-head);font-weight:600;
+}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-bg);border-color:var(--ok)}
+.opt.right .k{background:var(--ok);border-color:var(--ok);color:#06241b}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt.wrong .k{background:var(--bad);border-color:var(--bad);color:#3b0b0b}
+.opt.dim{opacity:.55}
+.fb{margin-top:18px;border-radius:14px;padding:14px 16px;border:2px solid var(--line);background:var(--night)}
+.fb.ok{border-color:var(--ok)}
+.fb.bad{border-color:var(--bad)}
+.fb h3{font-size:1.2rem;margin-bottom:2px}
+.fb.ok h3{color:var(--ok)}
+.fb.bad h3{color:var(--bad)}
+.fb p{margin:0}
+.next-row{margin-top:18px;text-align:right}
+
+/* Result */
+.score{text-align:center;padding:10px 0 4px}
+.score .big{font-family:var(--font-head);font-weight:600;font-size:clamp(3.4rem,16vw,5.2rem);color:var(--sun);line-height:1.1}
+.score .of{color:var(--muted);margin:0}
+.score h2{font-size:1.6rem;margin-top:10px}
+.score .msg{margin:6px auto 0;max-width:34rem;color:var(--muted)}
+.review{margin:26px 0 0}
+.review h3{font-size:1.25rem;margin-bottom:10px}
+.ritem{background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--bad);border-radius:12px;padding:12px 16px;margin-bottom:12px}
+.ritem p{margin:2px 0}
+.ritem .q{font-weight:700}
+.ritem .you{color:var(--bad)}
+.ritem .ans{color:var(--ok)}
+.ritem .why{color:var(--muted)}
+.perfect{background:var(--panel);border:1px solid var(--ok);border-radius:12px;padding:12px 16px;text-align:center}
+.actions{margin-top:24px;text-align:center}
+
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.9rem}
+
+@media (prefers-reduced-motion:reduce){
+  .spin{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- หน้าเริ่มต้น -->
+  <section id="start" class="hero" aria-labelledby="t-start">
+    <div class="orbit-box" aria-hidden="true">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ring" cx="200" cy="200" r="34"/>
+        <circle class="ring" cx="200" cy="200" r="52"/>
+        <circle class="ring" cx="200" cy="200" r="72"/>
+        <circle class="ring" cx="200" cy="200" r="94"/>
+        <circle class="ring" cx="200" cy="200" r="122"/>
+        <circle class="ring" cx="200" cy="200" r="150"/>
+        <circle class="ring" cx="200" cy="200" r="174"/>
+        <circle class="ring" cx="200" cy="200" r="195"/>
+        <circle cx="200" cy="200" r="20" fill="#ffc633"/>
+        <circle cx="200" cy="200" r="26" fill="#ffc633" opacity=".18"/>
+        <g class="spin" style="animation-duration:6s"><circle cx="234" cy="200" r="4" fill="#b8b0a8"/></g>
+        <g class="spin" style="animation-duration:10s"><circle cx="252" cy="200" r="6" fill="#e8b86b"/></g>
+        <g class="spin" style="animation-duration:15s"><circle cx="272" cy="200" r="6.5" fill="#4c9bff"/></g>
+        <g class="spin" style="animation-duration:22s"><circle cx="294" cy="200" r="5" fill="#e2603f"/></g>
+        <g class="spin" style="animation-duration:36s"><circle cx="322" cy="200" r="13" fill="#d9a877"/></g>
+        <g class="spin" style="animation-duration:50s"><circle cx="350" cy="200" r="11" fill="#e8d08a"/><ellipse cx="350" cy="200" rx="19" ry="4" fill="none" stroke="#e8d08a" stroke-width="2"/></g>
+        <g class="spin" style="animation-duration:68s"><circle cx="374" cy="200" r="8" fill="#7fdbe3"/></g>
+        <g class="spin" style="animation-duration:90s"><circle cx="395" cy="200" r="7.5" fill="#4f6bff"/></g>
+      </svg>
+    </div>
+    <h1 id="t-start">ท่องระบบสุริยะ</h1>
+    <p class="sub">แบบทดสอบวิทยาศาสตร์ ชั้นประถมศึกษาปีที่ 4</p>
+    <div class="info">
+      <p>มีทั้งหมด <strong>12 ข้อ</strong> เลือกคำตอบที่ถูกที่สุดเพียง 1 ข้อ</p>
+      <p>ตอบแล้วจะรู้ผลและอ่านคำอธิบายได้ทันที</p>
+    </div>
+    <button class="btn" id="btn-start" type="button">เริ่มทำแบบทดสอบ</button>
+  </section>
+
+  <!-- หน้าทำข้อสอบ -->
+  <section id="quiz" hidden aria-label="แบบทดสอบ">
+    <div class="top">
+      <span id="progress-text">ข้อ 1 จาก 12</span>
+      <span id="score-text">ถูก 0 ข้อ</span>
+    </div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <div class="qcard">
+      <p class="qnum" id="qnum"></p>
+      <h2 class="qtext" id="qtext" tabindex="-1"></h2>
+      <ul class="opts" id="opts"></ul>
+      <div id="fb" class="fb" hidden role="status" aria-live="polite"></div>
+      <div class="next-row"><button class="btn" id="btn-next" type="button" hidden>ข้อถัดไป</button></div>
+    </div>
+  </section>
+
+  <!-- หน้าสรุปผล -->
+  <section id="result" hidden aria-labelledby="t-result">
+    <div class="score">
+      <p class="of">คะแนนของคุณ</p>
+      <div class="big" id="r-score">0</div>
+      <p class="of" id="r-of">จาก 12 ข้อ</p>
+      <h2 id="t-result" tabindex="-1"></h2>
+      <p class="msg" id="r-msg"></p>
+    </div>
+    <div class="review" id="review"></div>
+    <div class="actions"><button class="btn" id="btn-again" type="button">ทำอีกครั้ง</button></div>
+  </section>
+
+  <footer>แบบทดสอบวิทยาศาสตร์ ป.4 · เรื่อง ระบบสุริยะ</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // คำตอบที่ถูกต้องเก็บไว้ที่ตัวเลือกแรกเสมอ แล้วโปรแกรมจะสลับลำดับตัวเลือกให้เองทุกครั้ง
+  var QUESTIONS = [
+    {q:"สิ่งใดต่อไปนี้ส่องแสงได้ด้วยตัวเอง?",
+     c:["ดวงอาทิตย์","ดาวพฤหัสบดี","ดวงจันทร์","ดาวอังคาร"],
+     why:"ดวงอาทิตย์เป็นดาวฤกษ์ จึงสร้างแสงและความร้อนได้เอง ส่วนดาวเคราะห์และดวงจันทร์เราเห็นได้เพราะสะท้อนแสงของดวงอาทิตย์"},
+    {q:"ระบบสุริยะมีดาวเคราะห์ทั้งหมดกี่ดวง?",
+     c:["8 ดวง","7 ดวง","9 ดวง","10 ดวง"],
+     why:"ระบบสุริยะมีดาวเคราะห์ 8 ดวง ได้แก่ ดาวพุธ ดาวศุกร์ โลก ดาวอังคาร ดาวพฤหัสบดี ดาวเสาร์ ดาวยูเรนัส และดาวเนปจูน"},
+    {q:"ดาวเคราะห์ดวงใดอยู่ใกล้ดวงอาทิตย์มากที่สุด?",
+     c:["ดาวพุธ","ดาวศุกร์","โลก","ดาวอังคาร"],
+     why:"ดาวพุธเป็นดาวเคราะห์ดวงแรกที่นับจากดวงอาทิตย์ และเป็นดาวเคราะห์ที่เล็กที่สุดในระบบสุริยะด้วย"},
+    {q:"ดาวเคราะห์ดวงใดมีขนาดใหญ่ที่สุดในระบบสุริยะ?",
+     c:["ดาวพฤหัสบดี","ดาวเสาร์","โลก","ดาวยูเรนัส"],
+     why:"ดาวพฤหัสบดีใหญ่ที่สุด ใหญ่มากจนโลกทั้งใบใส่เข้าไปได้กว่า 1,000 ใบ"},
+    {q:"ดาวเคราะห์ดวงใดมีวงแหวนที่เห็นได้ชัดเจนและสวยงามที่สุด?",
+     c:["ดาวเสาร์","ดาวอังคาร","ดาวศุกร์","ดาวพุธ"],
+     why:"ดาวเสาร์มีวงแหวนที่เห็นชัดเจน วงแหวนนี้ประกอบด้วยน้ำแข็งและหินก้อนเล็กก้อนใหญ่จำนวนมาก"},
+    {q:"ดาวเคราะห์ดวงใดมีสิ่งมีชีวิตอาศัยอยู่ (เท่าที่มนุษย์รู้จัก)?",
+     c:["โลก","ดาวอังคาร","ดาวศุกร์","ดาวพุธ"],
+     why:"โลกอยู่ห่างจากดวงอาทิตย์พอดี อุณหภูมิจึงไม่ร้อนหรือหนาวเกินไป และมีน้ำกับอากาศที่สิ่งมีชีวิตต้องการ"},
+    {q:"ดาวอังคารมีสีอะไร จึงได้ชื่อว่า “ดาวสีแดง”?",
+     c:["สีแดงอมส้ม","สีฟ้า","สีเขียว","สีม่วง"],
+     why:"พื้นผิวดาวอังคารมีสนิมเหล็กปกคลุม จึงดูเป็นสีแดงอมส้ม"},
+    {q:"ดวงจันทร์เป็นบริวารของดาวเคราะห์ดวงใด?",
+     c:["โลก","ดาวอังคาร","ดาวศุกร์","ดาวพฤหัสบดี"],
+     why:"ดวงจันทร์เป็นดาวบริวารตามธรรมชาติของโลก โคจรรอบโลกครบหนึ่งรอบใช้เวลาประมาณ 1 เดือน"},
+    {q:"โลกหมุนรอบตัวเองครบ 1 รอบ ใช้เวลาประมาณเท่าใด?",
+     c:["ประมาณ 24 ชั่วโมง (1 วัน)","ประมาณ 7 วัน","ประมาณ 1 เดือน","ประมาณ 1 ปี"],
+     why:"การหมุนรอบตัวเองของโลกทำให้เกิดกลางวันและกลางคืน 1 รอบใช้เวลาประมาณ 24 ชั่วโมง"},
+    {q:"โลกโคจรรอบดวงอาทิตย์ครบ 1 รอบ ใช้เวลาประมาณเท่าใด?",
+     c:["ประมาณ 365 วัน (1 ปี)","ประมาณ 24 ชั่วโมง","ประมาณ 7 วัน","ประมาณ 30 วัน"],
+     why:"การโคจรรอบดวงอาทิตย์ครบ 1 รอบ ใช้เวลาประมาณ 365 วัน ซึ่งเราเรียกว่า 1 ปี"},
+    {q:"ดาวเคราะห์ดวงใดอยู่ไกลดวงอาทิตย์มากที่สุด?",
+     c:["ดาวเนปจูน","ดาวเสาร์","ดาวยูเรนัส","ดาวพฤหัสบดี"],
+     why:"ดาวเนปจูนเป็นดาวเคราะห์ดวงที่ 8 อยู่ไกลที่สุด จึงได้รับแสงและความร้อนน้อยมาก"},
+    {q:"ดาวเคราะห์ดวงใดมีอุณหภูมิบนพื้นผิวสูงที่สุด?",
+     c:["ดาวศุกร์","ดาวพุธ","ดาวอังคาร","โลก"],
+     why:"ดาวศุกร์มีเมฆหนาห่อหุ้มและเก็บความร้อนไว้ พื้นผิวร้อนประมาณ 465 องศาเซลเซียส ร้อนกว่าดาวพุธที่อยู่ใกล้ดวงอาทิตย์มากกว่า"}
+  ];
+
+  var LETTERS = ["ก","ข","ค","ง"];
+  var TOTAL = QUESTIONS.length;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var el = {
+    start:$("start"), quiz:$("quiz"), result:$("result"),
+    btnStart:$("btn-start"), btnNext:$("btn-next"), btnAgain:$("btn-again"),
+    progress:$("progress-text"), score:$("score-text"), dots:$("dots"),
+    qnum:$("qnum"), qtext:$("qtext"), opts:$("opts"), fb:$("fb"),
+    rScore:$("r-score"), rOf:$("r-of"), rTitle:$("t-result"), rMsg:$("r-msg"), review:$("review")
+  };
+
+  var order, idx, correct, answered, log;
+
+  function shuffle(a){
+    a = a.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t=a[i]; a[i]=a[j]; a[j]=t;
+    }
+    return a;
+  }
+
+  function show(which){
+    ["start","quiz","result"].forEach(function(n){ el[n].hidden = (n!==which); });
+    window.scrollTo(0,0);
+  }
+
+  function begin(){
+    order = shuffle(QUESTIONS.map(function(_,i){return i;}));
+    idx = 0; correct = 0; answered = false; log = [];
+    buildDots();
+    show("quiz");
+    render();
+  }
+
+  function buildDots(){
+    el.dots.innerHTML = "";
+    for(var i=0;i<TOTAL;i++){
+      var d = document.createElement("span");
+      d.className = "dot";
+      el.dots.appendChild(d);
+    }
+  }
+
+  function updateDots(){
+    var ds = el.dots.children;
+    for(var i=0;i<ds.length;i++){
+      var cls = "dot";
+      var txt = "";
+      if(i<log.length){ cls += log[i].ok ? " ok" : " bad"; txt = log[i].ok ? "✓" : "✗"; }
+      else if(i===idx){ cls += " now"; }
+      ds[i].className = cls;
+      ds[i].textContent = txt;
+    }
+  }
+
+  function render(){
+    var item = QUESTIONS[order[idx]];
+    answered = false;
+    el.progress.textContent = "ข้อ " + (idx+1) + " จาก " + TOTAL;
+    el.score.textContent = "ถูก " + correct + " ข้อ";
+    el.qnum.textContent = "ข้อที่ " + (idx+1);
+    el.qtext.textContent = item.q;
+    el.fb.hidden = true;
+    el.fb.className = "fb";
+    el.fb.innerHTML = "";
+    el.btnNext.hidden = true;
+    el.btnNext.textContent = (idx===TOTAL-1) ? "ดูคะแนน" : "ข้อถัดไป";
+
+    var opts = shuffle(item.c.map(function(text,i){ return {text:text, right:i===0}; }));
+    item._shown = opts;
+    el.opts.innerHTML = "";
+    opts.forEach(function(o,i){
+      var li = document.createElement("li");
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "opt";
+      b.innerHTML = '<span class="k" aria-hidden="true">'+LETTERS[i]+'</span><span class="t"></span>';
+      b.querySelector(".t").textContent = o.text;
+      b.setAttribute("aria-label", "ตัวเลือก " + LETTERS[i] + " " + o.text);
+      b.addEventListener("click", function(){ choose(i); });
+      li.appendChild(b);
+      el.opts.appendChild(li);
+    });
+    updateDots();
+    el.qtext.focus({preventScroll:true});
+  }
+
+  function choose(i){
+    if(answered) return;
+    answered = true;
+    var item = QUESTIONS[order[idx]];
+    var opts = item._shown;
+    var picked = opts[i];
+    var rightIdx = opts.findIndex(function(o){return o.right;});
+    var btns = el.opts.querySelectorAll(".opt");
+
+    btns.forEach(function(b,k){
+      b.disabled = true;
+      if(k===rightIdx){ b.classList.add("right"); }
+      else if(k===i){ b.classList.add("wrong"); }
+      else { b.classList.add("dim"); }
+    });
+    // ใส่เครื่องหมายบนตัวอักษรเพื่อไม่ให้ใช้สีอย่างเดียวในการสื่อความหมาย
+    btns[rightIdx].querySelector(".k").textContent = "✓";
+    if(!picked.right){ btns[i].querySelector(".k").textContent = "✗"; }
+
+    if(picked.right){ correct++; }
+    log.push({qi:order[idx], ok:picked.right, picked:picked.text, right:opts[rightIdx].text});
+
+    el.fb.hidden = false;
+    el.fb.className = "fb " + (picked.right ? "ok" : "bad");
+    var head = document.createElement("h3");
+    head.textContent = picked.right ? "ถูกต้อง!" : "ยังไม่ถูก คำตอบที่ถูกคือ “" + opts[rightIdx].text + "”";
+    var p = document.createElement("p");
+    p.textContent = item.why;
+    el.fb.appendChild(head);
+    el.fb.appendChild(p);
+
+    el.score.textContent = "ถูก " + correct + " ข้อ";
+    updateDots();
+    el.btnNext.hidden = false;
+    el.btnNext.focus();
+  }
+
+  function next(){
+    if(idx < TOTAL-1){ idx++; render(); }
+    else { finish(); }
+  }
+
+  function finish(){
+    show("result");
+    el.rScore.textContent = correct;
+    el.rOf.textContent = "จาก " + TOTAL + " ข้อ";
+    var title, msg;
+    if(correct >= 11){ title="นักบินอวกาศตัวจริง!"; msg="คุณรู้เรื่องระบบสุริยะแน่นมาก ลองทำอีกครั้งเพื่อเก็บคะแนนเต็มดูนะ"; }
+    else if(correct >= 8){ title="เก่งมาก!"; msg="คุณเข้าใจเรื่องระบบสุริยะดีแล้ว ลองดูข้อที่พลาดด้านล่าง แล้วทำใหม่อีกครั้ง"; }
+    else if(correct >= 5){ title="ใกล้ถึงแล้ว"; msg="อ่านคำอธิบายของข้อที่พลาดด้านล่าง แล้วลองทำใหม่ คะแนนจะดีขึ้นแน่นอน"; }
+    else { title="เริ่มสำรวจใหม่อีกครั้ง"; msg="ไม่เป็นไร อ่านคำอธิบายด้านล่างให้ครบ แล้วกลับมาลองใหม่ได้เลย"; }
+    el.rTitle.textContent = title;
+    el.rMsg.textContent = msg;
+
+    el.review.innerHTML = "";
+    var wrongs = log.filter(function(l){return !l.ok;});
+    if(wrongs.length === 0){
+      var d = document.createElement("div");
+      d.className = "perfect";
+      d.textContent = "ตอบถูกทุกข้อ ไม่มีข้อที่ต้องทบทวน";
+      el.review.appendChild(d);
+    } else {
+      var h = document.createElement("h3");
+      h.textContent = "ข้อที่ควรทบทวน (" + wrongs.length + " ข้อ)";
+      el.review.appendChild(h);
+      wrongs.forEach(function(l){
+        var item = QUESTIONS[l.qi];
+        var box = document.createElement("div");
+        box.className = "ritem";
+        var a = document.createElement("p"); a.className="q"; a.textContent = item.q;
+        var b = document.createElement("p"); b.className="you"; b.textContent = "คุณตอบ: " + l.picked;
+        var c = document.createElement("p"); c.className="ans"; c.textContent = "คำตอบที่ถูก: " + l.right;
+        var w = document.createElement("p"); w.className="why"; w.textContent = item.why;
+        box.appendChild(a); box.appendChild(b); box.appendChild(c); box.appendChild(w);
+        el.review.appendChild(box);
+      });
+    }
+    el.rTitle.focus({preventScroll:true});
+  }
+
+  el.btnStart.addEventListener("click", begin);
+  el.btnNext.addEventListener("click", next);
+  el.btnAgain.addEventListener("click", begin);
+})();
+</script>
+</body>
+</html>
